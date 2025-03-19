@@ -10,7 +10,7 @@ export default function SalesCTA() {
           <div className="bg-white rounded-lg shadow-sm p-8 flex flex-col items-center text-center">
             <div className="relative w-40 h-40 mb-6">
               <Image
-                src="/rent.svg?height=160&width=160&text=Buy+a+home"
+                src="/rent.png?height=160&width=160&text=Buy+a+home"
                 alt="Buy a home"
                 fill
                 className="object-contain"
@@ -30,7 +30,7 @@ export default function SalesCTA() {
           <div className="bg-white rounded-lg shadow-sm p-8 flex flex-col items-center text-center">
             <div className="relative w-40 h-40 mb-6">
               <Image
-                src="/sell.png?height=160&width=160&text=Sell+a+home"
+                src="/sell.png?height=160&width=160&"
                 alt="Sell a home"
                 fill
                 className="object-contain"
