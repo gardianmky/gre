@@ -25,8 +25,7 @@ export default function MainNav() {
         {/* Logo */}
         <Link href="/" className="flex items-center">
           <div className="flex items-center">
-            <Home className="h-8 w-8 text-blue-600" />
-            <span className="ml-2 text-2xl font-bold text-gray-800">G</span>
+
           </div>
         </Link>
 
