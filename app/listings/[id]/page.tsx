@@ -1,122 +1,89 @@
-import { type NextRequest, NextResponse } from "next/server";
+e Error
 
-// Mock data - in a real app, this would come from a database
-const mockListings = [
-  {
-    listingID: "20063454",
-    type: "forSale",
-    address: {
-      street: "33 Beach Road",
-      suburb: "DOLPHIN HEADS",
-      state: "QLD",
-      postcode: 4740,
-    },
-    heading: "Relax, Entertain & Unwind by the Water",
-    price: "By Negotiation",
-    bedBathCarLand: [
-      {
-        key: "bedrooms",
-        value: "3",
-      },
-      {
-        key: "bathrooms",
-        value: "2",
-      },
-      {
-        key: "carSpaces",
-        value: "2",
-      },
-      {
-        key: "landSize",
-        value: "868 Square Mtr",
-      },
-    ],
-    images: [
-      {
-        url: "https://renet.photos/w/1200/10021353/images/10021353_20063454_21_1741050168.jpg",
-      },
-    ],
-    agents: [
-      {
-        agentID: 648325,
-        name: "Ben Kerrisk, Mick McLeod and Ryan Patton",
-        title: "Principal/Licensee/Sales Agents",
-        phone: "0407514983",
-        mobile: "0407514983",
-        imageURL: "http://cdn.renet.net.au/10021353/images/1678154026_1655072239image.jpg",
-      },
-    ],
-  },
-  {
-    listingID: "20063455",
-    type: "forRent",
-    address: {
-      street: "42 Ocean View",
-      suburb: "MACKAY",
-      state: "QLD",
-      postcode: 4740,
-    },
-    heading: "Stunning Beachfront Property",
-    price: "$450 per week",
-    bedBathCarLand: [
-      {
-        key: "bedrooms",
-        value: "4",
-      },
-      {
-        key: "bathrooms",
-        value: "2",
-      },
-      {
-        key: "carSpaces",
-        value: "1",
-      },
-    ],
-    images: [
-      {
-        url: "/placeholder.svg?height=600&width=800",
-      },
-    ],
-    agents: [
-      {
-        agentID: 648326,
-        name: "Sarah Johnson",
-        title: "Property Manager",
-        phone: "0412345678",
-        mobile: "0412345678",
-        imageURL: "/placeholder.svg?height=200&width=200",
-      },
-    ],
-  },
-];
+Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+See more info here: https://nextjs.org/docs/messages/react-hydration-error
+
+- className="light"
+- style={{color-scheme:"light"}}
+
+createUnhandledError
+../src/client/components/react-dev-overlay/internal/helpers/console-error.ts (14:35)
+formattedErrorMessage
+../src/client/components/react-dev-overlay/internal/helpers/use-error-handler.ts (30:34)
+error
+../src/client/components/globals/intercept-console-error.ts (32:11)
+emitPendingHydrationWarnings
+node_modules/.pnpm/next@15.1.0_react-dom@19.0.0_react@19.0.0__react@19.0.0/node_modules/next/dist/compiled/react-dom/cjs/react-dom-client.development.js (4299:1)import ListingClient from './listing-client';
+
+interface Listing {
+  listingID: string;
+  type: 'forSale' | 'forRent';
+  address: {
+    street: string;
+    suburb: string;
+    state: string;
+    postcode: number;
+  };
+  heading: string;
+  price: string;
+  bedBathCarLand: Array<{
+    key: string;
+    value: string;
+  }>;
+  images: Array<{
+    url: string;
+  }>;
+  agents: Array<{
+    agentID: number;
+    name: string;
+    title: string;
+    phone: string;
+    mobile: string;
+    imageURL: string;
+  }>;
+}
+
+async function getListing(id: string): Promise<Listing> {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/listings/${id}`, {
+    next: { revalidate: 60 } // Revalidate every 60 seconds
+  });
+  if (!res.ok) {
+    throw new Error('Failed to fetch listing');
+  }
+  return res.json();
+}
 
 // Utility function to validate listing ID
 function isValidListingID(id: string): boolean {
-  return /^\d+$/.test(id); // Example: Ensure ID is numeric
+  return /^\d+$/.test(id);
 }
 
-// Utility function to find a listing by ID
-function findListingById(id: string) {
-  return mockListings.find((listing) => listing.listingID === id);
-}
-
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export default async function ListingPage({ params }: { params: { id: string } }) {
   const { id } = params;
 
   // Validate the listing ID
   if (!isValidListingID(id)) {
-    return NextResponse.json({ error: "Invalid listing ID" }, { status: 400 });
+    return <div>Invalid listing ID</div>;
   }
 
-  // Find the listing
-  const listing = findListingById(id);
-
-  // Handle listing not found
+  const listing = await getListing(id).catch(() => null);
+  
   if (!listing) {
-    return NextResponse.json({ error: "Listing not found" }, { status: 404 });
+    return (
+      <div className="container mx-auto px-4 py-8 text-center">
+        <h1 className="text-2xl font-bold mb-4">Listing Not Found</h1>
+        <p>The requested listing could not be loaded.</p>
+      </div>
+    );
   }
 
-  // Return the listing
-  return NextResponse.json(listing);
-}
-
+  return <ListingClient listing={listing} />;
