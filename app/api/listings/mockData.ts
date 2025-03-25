@@ -48,8 +48,30 @@ Located just steps from the beach, this home captures breathtaking ocean views a
     ],
     images: [
       {
-        url: "/placeholder.svg?height=600&width=800&text=Beach+Road",
+        url: "/placeholder.svg?height=600&width=800&text=Beach+Road+1",
       },
+      {
+        url: "/placeholder.svg?height=600&width=800&text=Beach+Road+2",
+      },
+      {
+        url: "/placeholder.svg?height=600&width=800&text=Beach+Road+3",
+      },
+      {
+        url: "/placeholder.svg?height=600&width=800&text=Beach+Road+4",
+      },
+      {
+        url: "/placeholder.svg?height=600&width=800&text=Beach+Road+5",
+      },
+    ],
+    openForInspection: [
+      {
+        date: "2025-04-15",
+        time: "10:00 AM - 11:00 AM"
+      },
+      {
+        date: "2025-04-17", 
+        time: "2:00 PM - 3:00 PM"
+      }
     ],
     agents: [
       {
@@ -104,8 +126,20 @@ Enjoy spectacular ocean views from multiple rooms, including the master bedroom 
     ],
     images: [
       {
-        url: "/placeholder.svg?height=600&width=800&text=Ocean+View",
+        url: "/placeholder.svg?height=600&width=800&text=Ocean+View+1",
       },
+      {
+        url: "/placeholder.svg?height=600&width=800&text=Ocean+View+2",
+      },
+      {
+        url: "/placeholder.svg?height=600&width=800&text=Ocean+View+3",
+      },
+    ],
+    openForInspection: [
+      {
+        date: "2025-04-16",
+        time: "12:00 PM - 1:00 PM"
+      }
     ],
     agents: [
       {
@@ -166,8 +200,27 @@ The landscaped gardens include a fire pit area, vegetable garden, and plenty of 
     ],
     images: [
       {
-        url: "/placeholder.svg?height=600&width=800&text=Mountain+View",
+        url: "/placeholder.svg?height=600&width=800&text=Mountain+View+1",
       },
+      {
+        url: "/placeholder.svg?height=600&width=800&text=Mountain+View+2",
+      },
+      {
+        url: "/placeholder.svg?height=600&width=800&text=Mountain+View+3",
+      },
+      {
+        url: "/placeholder.svg?height=600&width=800&text=Mountain+View+4",
+      },
+    ],
+    openForInspection: [
+      {
+        date: "2025-04-14",
+        time: "9:00 AM - 10:00 AM"
+      },
+      {
+        date: "2025-04-16",
+        time: "4:00 PM - 5:00 PM"
+      }
     ],
     agents: [
       {
@@ -222,8 +275,17 @@ Both bedrooms include built-in wardrobes, while the modern bathroom features a w
     ],
     images: [
       {
-        url: "/placeholder.svg?height=600&width=800&text=River+Road",
+        url: "/placeholder.svg?height=600&width=800&text=River+Road+1",
       },
+      {
+        url: "/placeholder.svg?height=600&width=800&text=River+Road+2",
+      },
+    ],
+    openForInspection: [
+      {
+        date: "2025-04-15",
+        time: "3:00 PM - 4:00 PM"
+      }
     ],
     agents: [
       {
@@ -275,7 +337,13 @@ Ideal for boutique retail, professional services, or food/beverage businesses. A
     ],
     images: [
       {
-        url: "/placeholder.svg?height=600&width=800&text=Victoria+Street",
+        url: "/placeholder.svg?height=600&width=800&text=Victoria+Street+1",
+      },
+      {
+        url: "/placeholder.svg?height=600&width=800&text=Victoria+Street+2",
+      },
+      {
+        url: "/placeholder.svg?height=600&width=800&text=Victoria+Street+3",
       },
     ],
     agents: [
@@ -333,7 +401,16 @@ Located in Paget's industrial precinct with excellent transport links. Suitable 
     ],
     images: [
       {
-        url: "/placeholder.svg?height=600&width=800&text=Industrial+Drive",
+        url: "/placeholder.svg?height=600&width=800&text=Industrial+Drive+1",
+      },
+      {
+        url: "/placeholder.svg?height=600&width=800&text=Industrial+Drive+2",
+      },
+      {
+        url: "/placeholder.svg?height=600&width=800&text=Industrial+Drive+3",
+      },
+      {
+        url: "/placeholder.svg?height=600&width=800&text=Industrial+Drive+4",
       },
     ],
     agents: [
@@ -400,8 +477,37 @@ The property sits on 1500sqm of prime beachfront land with meticulously landscap
     ],
     images: [
       {
-        url: "/placeholder.svg?height=600&width=800&text=Beachside+Avenue",
+        url: "/placeholder.svg?height=600&width=800&text=Beachside+Avenue+1",
       },
+      {
+        url: "/placeholder.svg?height=600&width=800&text=Beachside+Avenue+2",
+      },
+      {
+        url: "/placeholder.svg?height=600&width=800&text=Beachside+Avenue+3",
+      },
+      {
+        url: "/placeholder.svg?height=600&width=800&text=Beachside+Avenue+4",
+      },
+      {
+        url: "/placeholder.svg?height=600&width=800&text=Beachside+Avenue+5",
+      },
+      {
+        url: "/placeholder.svg?height=600&width=800&text=Beachside+Avenue+6",
+      },
+    ],
+    openForInspection: [
+      {
+        date: "2025-04-13",
+        time: "11:00 AM - 12:00 PM"
+      },
+      {
+        date: "2025-04-14",
+        time: "2:00 PM - 3:00 PM"
+      },
+      {
+        date: "2025-04-15",
+        time: "10:00 AM - 11:00 AM"
+      }
     ],
     agents: [
       {
