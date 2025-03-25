@@ -1,8 +1,14 @@
-"use client"; // Add this line
+"use client";
 
 import Link from "next/link";
 import { Home, Menu } from "lucide-react";
 import { useState } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
 
 export default function MainNav() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -34,9 +40,33 @@ export default function MainNav() {
           <Link href="/?type=forSale" className="text-base font-medium text-gray-700 hover:text-primary">
             Buy
           </Link>
-          <Link href="/?type=forRent" className="text-base font-medium text-gray-700 hover:text-primary">
-            Rent
-          </Link>
+          <DropdownMenu>
+            <DropdownMenuTrigger className="text-base font-medium text-gray-700 hover:text-primary focus:outline-none">
+              Rent
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-48">
+              <DropdownMenuItem>
+                <Link href="/?type=forRent&propertyType=apartment" className="w-full">
+                  Apartments
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href="/?type=forRent&propertyType=house" className="w-full">
+                  Houses
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href="/?type=forRent&propertyType=townhouse" className="w-full">
+                  Townhouses
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href="/?type=forRent&propertyType=unit" className="w-full">
+                  Units
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <Link href="/sell" className="text-base font-medium text-gray-700 hover:text-primary">
             Sell
           </Link>
@@ -111,4 +141,3 @@ export default function MainNav() {
     </header>
   );
 }
-
