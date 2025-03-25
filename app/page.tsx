@@ -8,6 +8,8 @@ import SalesCTA from "@/components/sales-cta"
 import FeaturedAgents from "@/components/featured-agents"
 import Footer from "@/components/footer"
 import { Skeleton } from "@/components/ui/skeleton"
+import PropertyCard from "@/components/property-card"
+import { Button } from "@/components/ui/button"
 
 export default function HomePage() {
   return (
@@ -20,7 +22,25 @@ export default function HomePage() {
           <SearchFilters />
 
           <Suspense fallback={<ListingsSkeleton />}>
-            <PropertyListings />
+            <div className="container mx-auto px-4 py-12">
+        <h2 className="text-3xl font-bold mb-8 text-center">Featured Properties</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <PropertyCard 
+              key={i}
+              className="transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+              style={{
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+              }}
+            />
+          ))}
+        </div>
+        <div className="mt-12 text-center">
+          <Button variant="outline" className="px-8 py-4">
+            View More Properties
+          </Button>
+        </div>
+      </div>
           </Suspense>
         </div>
 
@@ -55,4 +75,3 @@ function ListingsSkeleton() {
     </div>
   )
 }
-

@@ -3,7 +3,7 @@ import { mockListings } from '@/app/api/listings/mockData';
 
 interface Listing {
   listingID: string;
-  type: 'forSale' | 'forRent';
+  type: 'forSale' | 'forRent' | 'commercialSale' | 'commercialLease' | 'auction';
   address: {
     street: string;
     suburb: string;
@@ -12,6 +12,19 @@ interface Listing {
   };
   heading: string;
   price: string;
+  description?: string;
+  features?: {
+    indoor: string[];
+    outdoor: string[];
+    amenities: string[];
+  };
+  location: { lat: number; lng: number };
+  virtualTour?: string;
+  socialMeta?: {
+    title: string;
+    description: string;
+    image: string;
+  };
   bedBathCarLand: Array<{
     key: string;
     value: string;
@@ -27,6 +40,10 @@ interface Listing {
     mobile: string;
     imageURL: string;
   }>;
+  openForInspection?: {
+    date: string;
+    time: string;
+  }[];
 }
 
 async function getListing(id: string): Promise<Listing> {

@@ -3,9 +3,10 @@ import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Bed, Bath, Car, MapPin } from "lucide-react"
+import { cn } from "@/lib/utils"
 
-interface PropertyCardProps {
-  listing: {
+interface PropertyCardProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+  listing?: {
     listingID: string
     type: string
     address: {
@@ -34,7 +35,28 @@ interface PropertyCardProps {
   }
 }
 
-export default function PropertyCard({ listing }: PropertyCardProps) {
+export default function PropertyCard({ listing, className, ...props }: PropertyCardProps) {
+  if (!listing) {
+    return (
+    <Link
+      href="#"
+      className={cn("h-full bg-white rounded-lg overflow-hidden border border-gray-200 block", className)}
+      {...props}
+    >
+      <div className="relative h-48 w-full bg-gray-100" />
+      <div className="p-4">
+        <div className="h-6 w-3/4 bg-gray-200 rounded mb-2" />
+        <div className="h-4 w-1/2 bg-gray-200 rounded mb-4" />
+        <div className="flex justify-between">
+          <div className="h-4 w-1/4 bg-gray-200 rounded" />
+          <div className="h-4 w-1/4 bg-gray-200 rounded" />
+          <div className="h-4 w-1/4 bg-gray-200 rounded" />
+        </div>
+      </div>
+    </Link>
+    )
+  }
+
   const { listingID, type, address, heading, price, bedBathCarLand, images } = listing
 
   const getPropertyFeature = (key: string) => {
@@ -47,7 +69,7 @@ export default function PropertyCard({ listing }: PropertyCardProps) {
   const carSpaces = getPropertyFeature("carSpaces")
 
   return (
-    <Link href={`/listings/${listingID}`}>
+    <Link href={`/listings/${listingID}`} className={className} {...props}>
       <Card className="h-full overflow-hidden hover:shadow-md transition-shadow">
         <div className="relative h-48 w-full">
           {images && images.length > 0 ? (
@@ -109,4 +131,3 @@ export default function PropertyCard({ listing }: PropertyCardProps) {
     </Link>
   )
 }
-

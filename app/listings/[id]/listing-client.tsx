@@ -48,7 +48,18 @@ interface Listing {
   heading: string;
   price: string;
   description?: string;
-  features?: string[];
+  features?: {
+    indoor: string[];
+    outdoor: string[];
+    amenities: string[];
+  };
+  location: { lat: number; lng: number };
+  virtualTour?: string;
+  socialMeta?: {
+    title: string;
+    description: string;
+    image: string;
+  };
   bedBathCarLand: BedBathCarLand[];
   images: Image[];
   agents: Agent[];
@@ -87,11 +98,29 @@ export default function ListingClient({ listing }: { listing: Listing }) {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Main content */}
         <div className="lg:col-span-2">
-          {/* Price and heading */}
-          <div className="mb-6">
-            <h1 className="text-3xl font-bold mb-2">{listing.heading}</h1>
-            <p className="text-2xl font-semibold text-primary">{listing.price}</p>
-          </div>
+            {/* Price and heading */}
+            <div className="mb-6">
+              <div className="flex justify-between items-start">
+                <div>
+                  <h1 className="text-3xl font-bold mb-2">{listing.heading}</h1>
+                  <p className="text-2xl font-semibold text-primary">{listing.price}</p>
+                </div>
+                {listing.virtualTour && (
+                  <Button variant="outline" className="gap-2" asChild>
+                    <a href={listing.virtualTour} target="_blank" rel="noopener noreferrer">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <polygon points="23 7 16 12 23 17 23 7"></polygon>
+                        <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+                      </svg>
+                      Virtual Tour
+                    </a>
+                  </Button>
+                )}
+              </div>
+              {listing.socialMeta && (
+                <p className="text-gray-600 mt-2">{listing.socialMeta.description}</p>
+              )}
+            </div>
 
           {/* Image gallery with parallax */}
           <div className="mb-8">
@@ -210,20 +239,15 @@ export default function ListingClient({ listing }: { listing: Listing }) {
               </div>
             )}
 
-            {listing.features && listing.features.length > 0 && (
+            {listing.features && (
               <div className="mb-8">
                 <h3 className="text-xl font-bold mb-4">Property Features</h3>
                 <div className="space-y-6">
-                  {/* Group features by category */}
-                  <div>
-                    <h4 className="font-semibold text-lg mb-3 text-primary">Interior</h4>
-                    <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      {listing.features
-                        .filter(f => f.toLowerCase().includes('kitchen') || 
-                                   f.toLowerCase().includes('bathroom') ||
-                                   f.toLowerCase().includes('floor') ||
-                                   f.toLowerCase().includes('built-in'))
-                        .map((feature, index) => (
+                  {listing.features.indoor && listing.features.indoor.length > 0 && (
+                    <div>
+                      <h4 className="font-semibold text-lg mb-3 text-primary">Interior Features</h4>
+                      <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {listing.features.indoor.map((feature, index) => (
                           <li key={`interior-${index}`} className="flex items-start gap-3">
                             <div className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary mt-0.5 flex-shrink-0">
                               <svg
@@ -242,19 +266,16 @@ export default function ListingClient({ listing }: { listing: Listing }) {
                             </div>
                             <span className="text-gray-700">{feature}</span>
                           </li>
-                      ))}
-                    </ul>
-                  </div>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
 
-                  <div>
-                    <h4 className="font-semibold text-lg mb-3 text-primary">Exterior</h4>
-                    <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      {listing.features
-                        .filter(f => f.toLowerCase().includes('garden') || 
-                                   f.toLowerCase().includes('pool') ||
-                                   f.toLowerCase().includes('deck') ||
-                                   f.toLowerCase().includes('garage'))
-                        .map((feature, index) => (
+                  {listing.features.outdoor && listing.features.outdoor.length > 0 && (
+                    <div>
+                      <h4 className="font-semibold text-lg mb-3 text-primary">Exterior Features</h4>
+                      <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {listing.features.outdoor.map((feature, index) => (
                           <li key={`exterior-${index}`} className="flex items-start gap-3">
                             <div className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary mt-0.5 flex-shrink-0">
                               <svg
@@ -273,24 +294,17 @@ export default function ListingClient({ listing }: { listing: Listing }) {
                             </div>
                             <span className="text-gray-700">{feature}</span>
                           </li>
-                      ))}
-                    </ul>
-                  </div>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
 
-                  <div>
-                    <h4 className="font-semibold text-lg mb-3 text-primary">Other Features</h4>
-                    <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      {listing.features
-                        .filter(f => !f.toLowerCase().includes('kitchen') && 
-                                   !f.toLowerCase().includes('bathroom') &&
-                                   !f.toLowerCase().includes('floor') &&
-                                   !f.toLowerCase().includes('built-in') &&
-                                   !f.toLowerCase().includes('garden') && 
-                                   !f.toLowerCase().includes('pool') &&
-                                   !f.toLowerCase().includes('deck') &&
-                                   !f.toLowerCase().includes('garage'))
-                        .map((feature, index) => (
-                          <li key={`other-${index}`} className="flex items-start gap-3">
+                  {listing.features.amenities && listing.features.amenities.length > 0 && (
+                    <div>
+                      <h4 className="font-semibold text-lg mb-3 text-primary">Amenities</h4>
+                      <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {listing.features.amenities.map((feature, index) => (
+                          <li key={`amenities-${index}`} className="flex items-start gap-3">
                             <div className="flex items-center justify-center w-6 h-6 rounded-full bg-primary/10 text-primary mt-0.5 flex-shrink-0">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -308,9 +322,10 @@ export default function ListingClient({ listing }: { listing: Listing }) {
                             </div>
                             <span className="text-gray-700">{feature}</span>
                           </li>
-                      ))}
-                    </ul>
-                  </div>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
@@ -327,12 +342,28 @@ export default function ListingClient({ listing }: { listing: Listing }) {
                     {listing.address.street}, {listing.address.suburb}, {listing.address.state} {listing.address.postcode}
                   </p>
                 </div>
-                <div className="h-64 bg-gray-200 rounded-lg">
-                  {/* Map placeholder */}
-                  <div className="w-full h-full flex items-center justify-center text-gray-500">
-                    Property Map
+              <div className="h-64 bg-gray-200 rounded-lg relative">
+                {/* Map placeholder with coordinates */}
+                <div className="w-full h-full flex items-center justify-center text-gray-500">
+                  <div className="text-center">
+                    <p>Property Location</p>
+                    <p className="text-xs mt-2">
+                      {listing.location.lat.toFixed(4)}, {listing.location.lng.toFixed(4)}
+                    </p>
                   </div>
                 </div>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="absolute bottom-4 right-4 gap-2"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                  </svg>
+                  View Map
+                </Button>
+              </div>
               </div>
               
               {listing.openForInspection && listing.openForInspection.length > 0 && (
